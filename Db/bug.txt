@@ -1,0 +1,12 @@
++ xóa khách hàng phải xóa 2 lần mới mất dữ liệu trong db
+
+
+/*SIZE*/
++lúc sửa size, khi chỉ sửa tên thì thông báo k nhập trùng mã -> sai
++khi ấn nút thêm mà chưa nhập gì lại k thông báo bất kì lỗi nào
+
+/*Mau*/
++lúc sửa mau khi chỉ sửa tên thì thông báo k nhập trùng mã -> sai
+
+
+

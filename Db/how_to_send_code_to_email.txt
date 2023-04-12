@@ -1,0 +1,60 @@
+import java.util.*;
+import javax.mail.*;
+import javax.mail.internet.*;
+
+public class SendEmail {
+
+    public static void main(String[] args) {
+
+        String to = "recipient@example.com"; // Địa chỉ email của người nhận
+        String from = "sender@example.com"; // Địa chỉ email của người gửi
+        String host = "smtp.example.com"; // SMTP server
+
+        Properties properties = System.getProperties();
+        properties.setProperty("mail.smtp.host", host);
+
+        Session session = Session.getDefaultInstance(properties);
+
+        try {
+            // Tạo một đối tượng MimeMessage.
+            MimeMessage message = new MimeMessage(session);
+
+            // Thiết lập thông tin người gửi và người nhận
+            message.setFrom(new InternetAddress(from));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+
+            // Thiết lập tiêu đề email
+            message.setSubject("Mã code");
+
+            // Thiết lập nội dung email
+            BodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setText("Đây là mã code.");
+
+            // Tạo một đối tượng Multipart để thêm các phần vào email.
+            Multipart multipart = new MimeMultipart();
+
+            // Thêm nội dung email vào đối tượng Multipart.
+            multipart.addBodyPart(messageBodyPart);
+
+            // Đính kèm tập tin mã code vào email
+            messageBodyPart = new MimeBodyPart();
+            String filename = "path/to/code/file"; // Đường dẫn đến tập tin mã code
+            DataSource source = new FileDataSource(filename);
+            messageBodyPart.setDataHandler(new DataHandler(source));
+            messageBodyPart.setFileName(filename);
+            multipart.addBodyPart(messageBodyPart);
+
+            // Thiết lập nội dung email với các phần đã thêm vào.
+            message.setContent(multipart);
+
+            // Gửi email.
+            Transport.send(message);
+            System.out.println("Email đã được gửi thành công.");
+        } catch (MessagingException mex) {
+            mex.printStackTrace();
+        }
+    }
+}
+
+Trong ví dụ trên, bạn cần thay đổi các giá trị của biến to, from, host và filename để phù hợp với ứng dụng của mình.
+
